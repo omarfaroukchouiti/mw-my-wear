@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    Favicon plate for MW — My Wear. The official logo file /mw-logo.svg is
+    displayed untouched (same bytes, same light colour #F2F2EE) on an ink
+    plate, exactly as in the header lock-up. Any favicon change must keep
+    the reference to the original file; never inline, recolour or redraw it.
+  -->
+  <rect width="64" height="64" rx="12" fill="#111111"/>
+  <image
+    href="/mw-logo.svg"
+    xlink:href="/mw-logo.svg"
+    x="5"
+    y="16.35"
+    width="54"
+    height="31.3"
+    preserveAspectRatio="xMidYMid meet"
+  />
+</svg>

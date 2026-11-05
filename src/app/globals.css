@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+/* `dark:` utilities follow the data-theme attribute set on <html>. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* MW identity — white, ink, soft grey, one muted blue-grey accent. */
+  --color-ink: #111111;
+  --color-ink-soft: #6f6f6f;
+  --color-paper: #ffffff;
+  --color-paper-dim: #f5f5f5;
+  --color-stage: #f5f5f5;
+  --color-line: #e5e5e5;
+  --color-accent: #72829a;
+  --color-accent-soft: #eef2f6;
+
+  --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anton), var(--font-cairo), ui-sans-serif, sans-serif;
+
+  --text-display: clamp(3.2rem, 11vw, 9rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.01em;
+}
+
+/*
+ * Dark theme keeps the same token names so every utility that references
+ * var(--color-*) re-skins on its own. `stage` stays light on purpose: the
+ * garment and sticker artwork is black/white vector, and a light stage keeps
+ * every piece visible in both modes.
+ */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ink: #f4f2ee;
+  --color-ink-soft: #a3a3a3;
+  --color-paper: #0d0d0d;
+  --color-paper-dim: #171717;
+  --color-stage: #e9e7e2;
+  --color-line: #2a2a2a;
+  --color-accent: #9db0c7;
+  --color-accent-soft: #1b222b;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .mw-container {
+    width: 100%;
+    max-width: 85rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .mw-container {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .mw-container {
+      padding-inline: 3rem;
+    }
+  }
+
+  .mw-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  /* Editorial display type: Anton for Latin, heavy Cairo for Arabic. */
+  .mw-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .mw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 2.9rem;
+    padding: 0.85rem 1.55rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: center;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .mw-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .mw-btn:active {
+    transform: translateY(0) scale(0.99);
+  }
+
+  .mw-btn:disabled {
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  .mw-btn-solid {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .mw-btn-solid:hover {
+    background-color: #2b2b2b;
+    border-color: #2b2b2b;
+    color: var(--color-paper);
+  }
+
+  /* In dark mode `ink` is light, so the hover shade has to go lighter too. */
+  html[data-theme="dark"] .mw-btn-solid:hover {
+    background-color: #dedbd4;
+    border-color: #dedbd4;
+    color: var(--color-paper);
+  }
+
+  .mw-btn-ghost {
+    background-color: transparent;
+    border-color: var(--color-line);
+    color: var(--color-ink);
+  }
+
+  .mw-btn-ghost:hover {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .mw-btn-light {
+    background-color: var(--color-paper);
+    border-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .mw-btn-light:hover {
+    background-color: var(--color-paper-dim);
+    border-color: var(--color-paper-dim);
+    color: var(--color-ink);
+  }
+
+  .mw-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.75rem;
+    width: 2.75rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    color: var(--color-ink);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .mw-icon-btn:hover {
+    background-color: var(--color-paper-dim);
+    border-color: var(--color-line);
+  }
+
+  .mw-card {
+    border: 1px solid var(--color-line);
+    border-radius: 1.75rem;
+    background-color: var(--color-paper);
+  }
+
+  .mw-no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mw-no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .story-link {
+    color: var(--color-ink-soft);
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    padding-bottom: 2px;
+    transition:
+      color 0.2s ease,
+      background-size 0.25s ease;
+  }
+
+  .story-link:hover {
+    color: var(--color-ink);
+    background-size: 100% 1px;
+  }
+
+  [dir="rtl"] .story-link {
+    background-position: 100% 100%;
+  }
+
+  .mw-dot-grid {
+    background-image: radial-gradient(var(--color-line) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  [dir="rtl"] .mw-display {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    line-height: 1.14;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  [dir="rtl"] .mw-eyebrow {
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+}
+
+@keyframes mw-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mw-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: mw-marquee 28s linear infinite;
+}
+
+[dir="rtl"] .mw-marquee-track {
+  animation-direction: reverse;
+}
+
+@keyframes mw-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mw-rise {
+  animation: mw-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mw-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.mw-delay-2 {
+  animation-delay: 0.16s;
+}
+
+.mw-delay-3 {
+  animation-delay: 0.24s;
+}
+
+@keyframes mw-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.6deg);
+  }
+}
+
+.mw-float {
+  animation: mw-float 8s ease-in-out infinite;
+}
+
+@keyframes mw-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mw-orbit {
+  animation: mw-orbit 42s linear infinite;
+}
+
+@keyframes mw-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .mw-reveal {
+      animation: mw-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 32%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-marquee-track,
+  .mw-rise,
+  .mw-float,
+  .mw-orbit,
+  .mw-reveal {
+    animation: none;
+  }
+}
+
+/*
+ * Theme button glyphs. The button ships both icons in the server HTML so
+ * hydration never mismatches; this unlayered rule (outside Tailwind's layers)
+ * picks the visible one from the <html data-theme> attribute. It must stay
+ * unlayered so it beats the utilities in the `utilities` layer.
+ */
+.mw-theme-moon {
+  display: inline-flex;
+}
+
+.mw-theme-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .mw-theme-moon {
+  display: none;
+}
+
+html[data-theme="dark"] .mw-theme-sun {
+  display: inline-flex;
+}
