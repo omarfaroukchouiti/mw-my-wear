@@ -54,6 +54,9 @@ export async function generateMetadata({
     title: dict.meta.title,
     description: dict.meta.description,
     applicationName: "MW — My Wear",
+    verification: {
+      google: "X92Adlhj9MAJYoxEZD0DV_hdHVyr7X6XCbSUFFSOgtc",
+    },
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
