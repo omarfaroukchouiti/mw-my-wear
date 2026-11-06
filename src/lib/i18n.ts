@@ -18,6 +18,54 @@ const ar = {
     description:
       "استوديو ملابس رقمي جزائري. صمّم قطعتك، اختر اللون والمقاس، وشاهد فكرتك تتحول إلى قطعة تلبس معك.",
   },
+  seo: {
+    home: {
+      title: "MW — My Wear | ملابس مخصصة وطباعة حسب الطلب في الجزائر",
+      description:
+        "استوديو ملابس مخصصة جزائري. صمّم قطعتك، اختر اللون والمقاس، واطبعها حسب الطلب في الجزائر مع توصيل لكل الولايات والدفع عند الاستلام.",
+    },
+    products: {
+      title: "المنتجات — ملابس مخصصة وطباعة حسب الطلب في الجزائر | MW",
+      description:
+        "تصفّح قمصان وهوديز وكابات MW المخصصة. اختر اللون والمقاس، أضف تصميمك، واطبع قطعتك حسب الطلب في الجزائر.",
+    },
+    studio: {
+      title: "استوديو التصميم — صمّم ملابسك المخصصة في الجزائر | MW",
+      description:
+        "صمّم قطعتك أونلاين: أضف نصك أو صورتك، اختر اللون والمقاس، ثم أضفها إلى السلة. طباعة حسب الطلب وتوصيل داخل الجزائر.",
+    },
+    product: {
+      titleSuffix: "ملابس مخصصة بطباعة حسب الطلب في الجزائر",
+      descriptionSuffix:
+        "اطلبها بتصميمك أو كما هي، مع طباعة حسب الطلب وتوصيل داخل الجزائر والدفع عند الاستلام.",
+    },
+    faq: {
+      title: "الأسئلة الشائعة — الطباعة المخصصة والتوصيل في الجزائر | MW",
+      description:
+        "أجوبة عن تصميم الملابس المخصصة، الطباعة حسب الطلب، المقاسات، التوصيل إلى 69 ولاية، والدفع عند الاستلام في الجزائر.",
+    },
+    sizes: {
+      title: "دليل المقاسات — مقاسات الملابس المخصصة | MW",
+      description:
+        "جدول المقاسات والوزن والطول لقطع MW المخصصة. اختر مقاسك بثقة قبل الطباعة والتوصيل داخل الجزائر.",
+    },
+    shipping: {
+      title: "التوصيل والإرجاع — 69 ولاية والدفع عند الاستلام | MW",
+      description:
+        "توصيل إلى كل ولايات الجزائر، دفع عند الاستلام، ومساعدة عند وجود عيب في القطعة المخصصة. اقرأ تفاصيل الشحن والإرجاع.",
+    },
+    privacy: {
+      title: "سياسة الخصوصية | MW — My Wear",
+      description:
+        "كيف نجمع بيانات طلبك ونستخدمها ونحميها في متجر MW للملابس المخصصة في الجزائر.",
+    },
+    terms: {
+      title: "الشروط والأحكام | MW — My Wear",
+      description:
+        "شروط الطلب والطباعة المخصصة والتوصيل والدفع عند الاستلام في متجر MW — My Wear الجزائري.",
+    },
+    homeCrumb: "الرئيسية",
+  },
   notFound: {
     eyebrow: "خطأ 404",
     title: "الصفحة غير موجودة",
@@ -696,6 +744,54 @@ const en: Dictionary = {
     title: "MW — My Wear | Make it yours",
     description:
       "An Algerian digital clothing studio. Design your piece, choose the colour and size, and watch your idea become something you wear.",
+  },
+  seo: {
+    home: {
+      title: "MW — My Wear | Custom clothing & on-demand printing in Algeria",
+      description:
+        "An Algerian custom-clothing studio. Design your piece, choose colour and size, and have it printed on demand in Algeria with nationwide delivery and cash on delivery.",
+    },
+    products: {
+      title: "Products — Custom clothing & on-demand printing in Algeria | MW",
+      description:
+        "Shop MW custom tees, hoodies and caps. Choose your colour and size, add your design, and have it printed on demand in Algeria.",
+    },
+    studio: {
+      title: "Design studio — Design your custom clothing in Algeria | MW",
+      description:
+        "Design your piece online: add text or an image, choose colour and size, then add it to your cart. On-demand printing and delivery across Algeria.",
+    },
+    product: {
+      titleSuffix: "custom clothing printed on demand in Algeria",
+      descriptionSuffix:
+        "Order it with your design or plain, with on-demand printing, delivery across Algeria and cash on delivery.",
+    },
+    faq: {
+      title: "FAQ — Custom printing & delivery in Algeria | MW",
+      description:
+        "Answers about custom clothing design, on-demand printing, sizing, delivery to all 69 wilayas, and cash on delivery in Algeria.",
+    },
+    sizes: {
+      title: "Size guide — custom clothing sizes | MW",
+      description:
+        "Size, weight and height charts for MW custom pieces. Choose your size with confidence before printing and delivery in Algeria.",
+    },
+    shipping: {
+      title: "Delivery & returns — 69 wilayas, cash on delivery | MW",
+      description:
+        "Delivery to every wilaya in Algeria, cash on delivery, and help if a custom piece is faulty. Read the shipping and returns details.",
+    },
+    privacy: {
+      title: "Privacy policy | MW — My Wear",
+      description:
+        "How we collect, use and protect your order data at MW, the Algerian custom-clothing store.",
+    },
+    terms: {
+      title: "Terms & conditions | MW — My Wear",
+      description:
+        "Order, custom printing, delivery and cash-on-delivery terms for MW — My Wear in Algeria.",
+    },
+    homeCrumb: "Home",
   },
   notFound: {
     eyebrow: "Error 404",

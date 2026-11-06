@@ -57,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      locale: safeLocale === "ar" ? "ar_DZ" : "en_DZ",
+      locale: safeLocale === "ar" ? "ar_DZ" : "en_US",
       type: "website",
       url: `/${safeLocale}`,
       siteName: "MW — My Wear",
@@ -93,12 +93,12 @@ export default async function LocaleLayout({
 
   const organisation = {
     "@context": "https://schema.org",
-    "@type": "ClothingStore",
+    "@type": ["Organization", "ClothingStore"],
     "@id": `${siteUrl()}/#store`,
     name: "MW — My Wear",
     url: siteUrl(),
     email: site.email,
-    logo: absoluteUrl("/og.png"),
+    logo: site.logo ? absoluteUrl(site.logo) : absoluteUrl("/og.png"),
     image: absoluteUrl("/og.png"),
     sameAs: site.social
       .map((item) => item.href)
@@ -114,6 +114,7 @@ export default async function LocaleLayout({
     "@type": "WebSite",
     "@id": `${siteUrl()}/#website`,
     name: "MW — My Wear",
+    alternateName: "MW",
     url: siteUrl(),
     inLanguage: locale === "ar" ? "ar-DZ" : "en-DZ",
     publisher: { "@id": `${siteUrl()}/#store` },

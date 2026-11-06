@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/structured-data";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { alternatesFor, openGraphFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import { gmailComposeUrl, site } from "@/lib/site";
 
 export async function generateMetadata({
@@ -15,12 +15,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
-  return {
-    title: `${dict.faq.title} — MW`,
-    description: dict.faq.intro,
-    alternates: alternatesFor(locale, "faq"),
-    openGraph: openGraphFor(locale, `${dict.faq.title} — MW`, dict.faq.intro, "faq"),
-  };
+  return pageMetadata({
+    locale,
+    path: "faq",
+    title: dict.seo.faq.title,
+    description: dict.seo.faq.description,
+  });
 }
 
 export default async function FaqPage({

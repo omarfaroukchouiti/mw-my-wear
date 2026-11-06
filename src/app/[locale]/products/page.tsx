@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ProductCard } from "@/components/product-card";
+import { JsonLd } from "@/components/structured-data";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import {
   garmentCollections,
@@ -10,7 +11,7 @@ import {
   isGarmentType,
   products,
 } from "@/lib/products";
-import { alternatesFor } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -20,11 +21,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
-  return {
-    title: `${dict.products.title} — MW`,
-    description: dict.products.subtitle,
-    alternates: alternatesFor(locale, "products"),
-  };
+  return pageMetadata({
+    locale,
+    path: "products",
+    title: dict.seo.products.title,
+    description: dict.seo.products.description,
+  });
 }
 
 export default async function ProductsPage({
@@ -45,8 +47,22 @@ export default async function ProductsPage({
 
   const dict = getDictionary(locale);
 
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: dict.seo.products.title,
+    numberOfItems: shown.length,
+    itemListElement: shown.map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: product.name[locale],
+      url: absoluteUrl(`/${locale}/products/${product.slug}`),
+    })),
+  };
+
   return (
     <div className="mw-container py-12 md:py-16">
+      <JsonLd data={itemListLd} />
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-8">
         <div>
           <h1 className="mw-display text-3xl md:text-5xl">{dict.products.title}</h1>

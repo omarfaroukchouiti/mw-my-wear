@@ -122,7 +122,7 @@ export function Header({ locale, nav }: HeaderProps) {
 
             <Link
               href={switchHref}
-              aria-label={nav.langLabel}
+              aria-label={`${nav.langLabel}: ${other === "ar" ? "العربية" : "EN"}`}
               className="ms-1 hidden h-9 items-center rounded-full border border-line px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-ink-soft transition-colors hover:border-ink hover:text-ink md:inline-flex"
             >
               {other === "ar" ? "العربية" : "EN"}

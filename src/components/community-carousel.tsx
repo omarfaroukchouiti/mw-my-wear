@@ -74,7 +74,7 @@ export function CommunityCarousel({
   const NextIcon = locale === "ar" ? ArrowLeftIcon : ArrowRightIcon;
 
   return (
-    <div>
+    <div role="region" aria-label={labels.region}>
       <div className="mb-4 flex items-center justify-end gap-2">
         <button
           type="button"
@@ -98,8 +98,6 @@ export function CommunityCarousel({
 
       <ul
         ref={trackRef}
-        role="region"
-        aria-label={labels.region}
         tabIndex={0}
         className="mw-no-scrollbar -mx-1 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-1 pb-2"
       >

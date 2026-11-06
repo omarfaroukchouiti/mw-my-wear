@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { LegalPage } from "@/components/legal-page";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { alternatesFor, openGraphFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -13,12 +13,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
-  return {
-    title: `${dict.privacy.title} — MW`,
-    description: dict.privacy.intro,
-    alternates: alternatesFor(locale, "privacy"),
-    openGraph: openGraphFor(locale, `${dict.privacy.title} — MW`, dict.privacy.intro, "privacy"),
-  };
+  return pageMetadata({
+    locale,
+    path: "privacy",
+    title: dict.seo.privacy.title,
+    description: dict.seo.privacy.description,
+  });
 }
 
 export default async function PrivacyPage({

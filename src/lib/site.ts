@@ -27,6 +27,52 @@ export const site: {
   ],
 };
 
+const PRODUCTION_FALLBACK = "https://mw-my-wear.vercel.app";
+const DEVELOPMENT_FALLBACK = "http://localhost:3000";
+
+/**
+ * One absolute origin for canonical links, hreflang, Open Graph and the
+ * sitemap. This is the only place the public URL is resolved.
+ *
+ * Order:
+ *   1. NEXT_PUBLIC_SITE_URL  — set it in Vercel (and locally when needed).
+ *   2. SITE_URL              — kept for existing deployments.
+ *   3. VERCEL_PROJECT_PRODUCTION_URL — Vercel provides it without a scheme.
+ *   4. Production fallback, then the local dev server.
+ */
+export function siteUrl(): string {
+  for (const raw of [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ]) {
+    const value = normalizeSiteUrl(raw);
+    if (value) return value;
+  }
+
+  return process.env.NODE_ENV === "production"
+    ? PRODUCTION_FALLBACK
+    : DEVELOPMENT_FALLBACK;
+}
+
+function normalizeSiteUrl(raw: string | undefined): string | null {
+  const value = raw?.trim();
+  if (!value) return null;
+
+  // Vercel exposes the host without a scheme; localhost must stay on http.
+  const withScheme = /^https?:\/\//i.test(value)
+    ? value
+    : /^localhost(?::\d+)?$/i.test(value)
+      ? `http://${value}`
+      : `https://${value}`;
+
+  try {
+    return new URL(withScheme).origin;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Gmail compose in a new tab. Using the web compose URL (instead of `mailto:`)
  * opens the message window directly for visitors whose browser is not wired to

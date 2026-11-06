@@ -6,8 +6,13 @@ import { ProductCard } from "@/components/product-card";
 import { ProductView } from "@/components/product-view";
 import { JsonLd } from "@/components/structured-data";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { getProduct, getProductSlugs, products } from "@/lib/products";
-import { absoluteUrl, alternatesFor, openGraphFor } from "@/lib/seo";
+import {
+  garmentLabels,
+  getProduct,
+  getProductSlugs,
+  products,
+} from "@/lib/products";
+import { absoluteUrl, pageMetadata, siteUrl } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getProductSlugs().map((slug) => ({ slug }));
@@ -21,13 +26,14 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const product = getProduct(slug);
   if (!product || !isLocale(locale)) return {};
-  const title = `${product.name[locale]} — MW`;
-  return {
+  const dict = getDictionary(locale);
+  const title = `${product.name[locale]} — ${dict.seo.product.titleSuffix} | MW`;
+  return pageMetadata({
+    locale,
+    path: `products/${product.slug}`,
     title,
-    description: product.blurb[locale],
-    alternates: alternatesFor(locale, `products/${product.slug}`),
-    openGraph: openGraphFor(locale, title, product.blurb[locale], `products/${product.slug}`),
-  };
+    description: `${product.blurb[locale]} ${dict.seo.product.descriptionSuffix}`,
+  });
 }
 
 export default async function ProductPage({
@@ -52,6 +58,7 @@ export default async function ProductPage({
     name: product.name[locale],
     description: product.blurb[locale],
     sku: product.slug,
+    category: garmentLabels[product.type][locale],
     image: [absoluteUrl("/og.png")],
     brand: { "@type": "Brand", name: "MW — My Wear" },
     offers: {
@@ -63,6 +70,7 @@ export default async function ProductPage({
       // honest state until the inventory phase adds real stock counts.
       availability: "https://schema.org/PreOrder",
       itemCondition: "https://schema.org/NewCondition",
+      seller: { "@id": `${siteUrl()}/#store` },
     },
   };
 
@@ -73,12 +81,18 @@ export default async function ProductPage({
       {
         "@type": "ListItem",
         position: 1,
+        name: dict.seo.homeCrumb,
+        item: absoluteUrl(`/${locale}`),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
         name: dict.nav.shop,
         item: absoluteUrl(`/${locale}/products`),
       },
       {
         "@type": "ListItem",
-        position: 2,
+        position: 3,
         name: product.name[locale],
         item: absoluteUrl(`/${locale}/products/${product.slug}`),
       },

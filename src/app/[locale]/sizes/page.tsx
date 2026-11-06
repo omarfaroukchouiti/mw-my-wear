@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { alternatesFor, openGraphFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import { sizeChart } from "@/lib/sizes";
 
 export async function generateMetadata({
@@ -14,12 +14,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
-  return {
-    title: `${dict.sizes.title} — MW`,
-    description: dict.sizes.subtitle,
-    alternates: alternatesFor(locale, "sizes"),
-    openGraph: openGraphFor(locale, `${dict.sizes.title} — MW`, dict.sizes.subtitle, "sizes"),
-  };
+  return pageMetadata({
+    locale,
+    path: "sizes",
+    title: dict.seo.sizes.title,
+    description: dict.seo.sizes.description,
+  });
 }
 
 export default async function SizesPage({

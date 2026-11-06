@@ -41,10 +41,11 @@ export function StudioVideo({ caption }: { caption: string }) {
           className="block h-auto w-full"
           style={{ aspectRatio: "1086 / 720" }}
           src="/studio-demo.webm"
+          poster="/studio-poster.jpg"
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           aria-label={caption}
         />
       </div>

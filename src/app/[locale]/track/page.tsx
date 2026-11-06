@@ -15,7 +15,7 @@ export async function generateMetadata({
   return {
     title: `${dict.track.title} — MW`,
     description: dict.track.subtitle,
-    robots: { index: false, follow: true },
+    robots: { index: false, follow: false },
   };
 }
 

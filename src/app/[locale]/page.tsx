@@ -19,7 +19,7 @@ import {
   products,
   type GarmentType,
 } from "@/lib/products";
-import { alternatesFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -28,7 +28,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  return { alternates: alternatesFor(locale) };
+  const dict = getDictionary(locale);
+  return pageMetadata({
+    locale,
+    title: dict.seo.home.title,
+    description: dict.seo.home.description,
+  });
 }
 
 const collectionColor: Record<GarmentType, string> = {
@@ -136,7 +141,7 @@ export default async function HomePage({
 
       {/* 04 — Brand statistics */}
       <section className="border-b border-line" aria-label={home.heroLabel}>
-        <dl className="mw-container grid md:grid-cols-3">
+        <div className="mw-container grid md:grid-cols-3">
           {home.stats.map((stat, index) => (
             <div
               key={stat.note}
@@ -150,22 +155,21 @@ export default async function HomePage({
                 <FeatureIcon name={stat.icon} size={20} />
               </span>
               <div>
-                <dt className="sr-only">{stat.note}</dt>
-                <dd className="flex items-baseline gap-1.5">
+                <p className="flex items-baseline gap-1.5">
                   <span className="text-[2rem] font-black leading-none tracking-tight">
                     {stat.value}
                   </span>
                   {stat.unit && (
                     <span className="text-sm font-semibold text-ink">{stat.unit}</span>
                   )}
-                </dd>
-                <dd className="mt-1.5 text-[11px] leading-snug text-ink-soft">
+                </p>
+                <p className="mt-1.5 text-[11px] leading-snug text-ink-soft">
                   {stat.note}
-                </dd>
+                </p>
               </div>
             </div>
           ))}
-        </dl>
+        </div>
       </section>
 
       {/* 05 — Product collections */}

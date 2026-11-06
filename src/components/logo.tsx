@@ -28,7 +28,7 @@ export function Logo({
   return (
     <Link
       href={`/${locale}`}
-      aria-label="MW — My Wear"
+      aria-label="MW — My Wear Make it yours"
       className="group inline-flex shrink-0 items-center gap-2.5"
     >
       {site.logo ? (
@@ -52,7 +52,7 @@ export function Logo({
           >
             <span className={`font-extrabold tracking-[0.2em] ${word}`}>
               MY WEAR
-            </span>
+            </span>{" "}
             <span className="mt-1 text-[8px] font-medium uppercase tracking-[0.26em] text-ink-soft">
               Make it yours
             </span>
@@ -85,7 +85,7 @@ export function Logo({
               }`}
             >
               MY WEAR
-            </span>
+            </span>{" "}
             <span className="mt-1 text-[8px] font-medium uppercase tracking-[0.28em] text-ink-soft">
               Make it yours
             </span>

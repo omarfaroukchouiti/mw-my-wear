@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             ar: `${base}/ar${suffix}`,
             en: `${base}/en${suffix}`,
+            "x-default": `${base}/ar${suffix}`,
           },
         },
       });

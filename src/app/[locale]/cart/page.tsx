@@ -14,7 +14,7 @@ export async function generateMetadata({
   const dict = getDictionary(locale);
   return {
     title: `${dict.cart.title} — MW`,
-    robots: { index: false, follow: true },
+    robots: { index: false, follow: false },
   };
 }
 

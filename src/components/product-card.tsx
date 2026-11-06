@@ -32,7 +32,7 @@ export function ProductCard({
 
       <div className="mt-4 flex items-start justify-between gap-4 px-1">
         <div>
-          <h3 className="text-sm font-semibold">{product.name[locale]}</h3>
+          <h2 className="text-sm font-semibold">{product.name[locale]}</h2>
           <div className="mt-2 flex items-center gap-1.5">
             {product.colors.map((item) => (
               <span

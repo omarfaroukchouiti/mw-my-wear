@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { StudioEditor } from "@/components/studio/studio-editor";
+import { StudioEditorLoader } from "@/components/studio/studio-editor-loader";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { products } from "@/lib/products";
-import { alternatesFor } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -14,11 +14,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
-  return {
-    title: `${dict.studio.title} — MW`,
-    description: dict.studio.subtitle,
-    alternates: alternatesFor(locale, "studio"),
-  };
+  return pageMetadata({
+    locale,
+    path: "studio",
+    title: dict.seo.studio.title,
+    description: dict.seo.studio.description,
+  });
 }
 
 export default async function StudioPage({
@@ -48,7 +49,7 @@ export default async function StudioPage({
       </div>
 
       <div className="mt-6">
-        <StudioEditor
+        <StudioEditorLoader
           locale={locale}
           dict={dict}
           products={products}

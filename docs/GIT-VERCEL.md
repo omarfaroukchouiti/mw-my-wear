@@ -51,7 +51,8 @@ git push -u origin main
 
 | المتغير | مطلوب |
 |---|---|
-| `SITE_URL` | نعم (الأصل النهائي بدون `/` في النهاية) |
+| `NEXT_PUBLIC_SITE_URL` | نعم (الأصل النهائي بدون `/` في النهاية) |
+| `SITE_URL` | اسم قديم اختياري، ما زال مدعوماً |
 | `SUPABASE_URL` | نعم لاستقبال الطلبات |
 | `SUPABASE_SERVICE_ROLE_KEY` | نعم — سرّي، خادمي فقط |
 | `ADMIN_PASSWORD` | نعم للوحة الإدارة |
@@ -60,7 +61,7 @@ git push -u origin main
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | اختياري لكن موصى به |
 
 5. اضغط **Deploy**.
-6. بعد ربط الدومين النهائي، حدّث `SITE_URL` ثم أعد النشر.
+6. بعد ربط الدومين النهائي، حدّث `NEXT_PUBLIC_SITE_URL` ثم أعد النشر.
 
 ## تحذيرات
 
