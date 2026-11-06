@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ProductCard } from "@/components/product-card";
 import { ProductView } from "@/components/product-view";
 import { JsonLd } from "@/components/structured-data";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { getProduct, getProductSlugs } from "@/lib/products";
+import { getProduct, getProductSlugs, products } from "@/lib/products";
 import { absoluteUrl, alternatesFor, openGraphFor } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -40,6 +42,9 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const dict = getDictionary(locale);
+  const related = products
+    .filter((item) => item.slug !== product.slug)
+    .slice(0, 3);
 
   const productLd = {
     "@context": "https://schema.org",
@@ -81,9 +86,29 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="mw-container py-10 md:py-16">
+    <div className="pb-24 md:pb-16">
       <JsonLd data={[productLd, breadcrumbLd]} />
       <ProductView product={product} locale={locale} dict={dict} />
+
+      <section className="mw-container mt-10 md:mt-16" aria-labelledby="related-heading">
+        <div className="flex items-end justify-between gap-4 border-b border-line pb-4">
+          <h2 id="related-heading" className="text-lg font-black md:text-2xl">
+            {dict.product.related}
+          </h2>
+          <Link
+            href={`/${locale}/products`}
+            className="text-[11px] font-semibold text-ink-soft transition-colors hover:text-ink"
+          >
+            {dict.nav.shop} ←
+          </Link>
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-5">
+          {related.map((item) => (
+            <ProductCard key={item.slug} product={item} locale={locale} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

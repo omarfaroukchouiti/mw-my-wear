@@ -222,6 +222,31 @@ html[data-theme="dark"] {
     display: none;
   }
 
+  /* Mobile purchase bar keeps 44px+ targets clear of the home indicator. */
+  .mw-product-bar {
+    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mw-details > summary {
+    list-style: none;
+  }
+
+  .mw-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mw-details > summary::marker {
+    content: "";
+  }
+
+  .mw-details-icon {
+    transition: transform 0.2s ease;
+  }
+
+  .mw-details[open] .mw-details-icon {
+    transform: rotate(45deg);
+  }
+
   .story-link {
     color: var(--color-ink-soft);
     background-image: linear-gradient(currentColor, currentColor);

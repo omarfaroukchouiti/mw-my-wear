@@ -205,6 +205,27 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function WalletIcon(props: IconProps) {
+  return (
+    <StrokeIcon {...props}>
+      <path d="M3 7a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v2" />
+      <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2H4" />
+      <path d="M16 13h3" />
+    </StrokeIcon>
+  );
+}
+
+export function RefreshIcon(props: IconProps) {
+  return (
+    <StrokeIcon {...props}>
+      <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-7.5-4.1" />
+      <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 7.5 4.1" />
+      <path d="M3 4v4h4" />
+      <path d="M21 20v-4h-4" />
+    </StrokeIcon>
+  );
+}
+
 export function SquareIcon(props: IconProps) {
   return (
     <StrokeIcon {...props}>
