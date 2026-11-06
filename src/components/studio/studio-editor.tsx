@@ -198,6 +198,7 @@ export function StudioEditor({
   const stageRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const flipTimers = useRef<number[]>([]);
+  const flippingRef = useRef(false);
   const apiRef = useRef<EditorApi | null>(null);
 
   const canvasRef = useRef<any>(null);
@@ -838,17 +839,29 @@ export function StudioEditor({
   }, []);
 
   const changeSide = (next: Side) => {
-    if (next === side || flip !== "idle") return;
+    if (next === side || flippingRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      void apiRef.current?.switchSide(next);
+      flippingRef.current = true;
+      const pending = apiRef.current?.switchSide(next);
+      if (pending) void pending.finally(() => (flippingRef.current = false));
+      else flippingRef.current = false;
       return;
     }
+    flippingRef.current = true;
     setFlip("out");
     const out = window.setTimeout(async () => {
-      await apiRef.current?.switchSide(next);
-      setFlip("in");
-      const settle = window.setTimeout(() => setFlip("idle"), 280);
-      flipTimers.current.push(settle);
+      try {
+        await apiRef.current?.switchSide(next);
+        setFlip("in");
+        const settle = window.setTimeout(() => {
+          flippingRef.current = false;
+          setFlip("idle");
+        }, 280);
+        flipTimers.current.push(settle);
+      } catch {
+        flippingRef.current = false;
+        setFlip("idle");
+      }
     }, 180);
     flipTimers.current.push(out);
   };
