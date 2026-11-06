@@ -28,7 +28,7 @@ npm run dev
 
 | المتغير | الغرض |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | أصل الموقع في الإنتاج (بدون `/` نهائي) للـ canonical وsitemap وOG |
+| `NEXT_PUBLIC_SITE_URL` | اختياري — اتركه فارغاً على Vercel لاستخدام دومين المشروع المجاني؛ اضبطه فقط عند ربط دومين مخصص |
 | `SITE_URL` | اسم قديم اختياري، ما زال مدعوماً |
 | `SUPABASE_URL` | رابط مشروع Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | مفتاح الخدمة الخادمي (يتجاوز RLS — لا يُكشف أبداً) |
