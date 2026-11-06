@@ -335,6 +335,36 @@ html[data-theme="dark"] {
   animation: mw-orbit 42s linear infinite;
 }
 
+@keyframes mw-flip-out {
+  from {
+    transform: perspective(1200px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(1200px) rotateY(90deg);
+  }
+}
+
+@keyframes mw-flip-in {
+  from {
+    transform: perspective(1200px) rotateY(-90deg);
+  }
+  to {
+    transform: perspective(1200px) rotateY(0deg);
+  }
+}
+
+.mw-flip-out {
+  animation: mw-flip-out 180ms cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.mw-flip-in {
+  animation: mw-flip-in 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
 @keyframes mw-fade-up {
   from {
     opacity: 0;
@@ -361,7 +391,9 @@ html[data-theme="dark"] {
   .mw-rise,
   .mw-float,
   .mw-orbit,
-  .mw-reveal {
+  .mw-reveal,
+  .mw-flip-out,
+  .mw-flip-in {
     animation: none;
   }
 }

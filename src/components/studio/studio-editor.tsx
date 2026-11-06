@@ -182,6 +182,7 @@ export function StudioEditor({
   const [colorIndex, setColorIndex] = useState(0);
   const [size, setSize] = useState(initialProduct.sizes[0]);
   const [side, setSide] = useState<Side>("front");
+  const [flip, setFlip] = useState<"idle" | "out" | "in">("idle");
   const [selected, setSelected] = useState<SelectionInfo | null>(null);
   const [layers, setLayers] = useState<LayerInfo[]>([]);
   const [canUndo, setCanUndo] = useState(false);
@@ -196,6 +197,7 @@ export function StudioEditor({
 
   const stageRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const flipTimers = useRef<number[]>([]);
   const apiRef = useRef<EditorApi | null>(null);
 
   const canvasRef = useRef<any>(null);
@@ -221,6 +223,13 @@ export function StudioEditor({
   useEffect(() => {
     sideRef.current = side;
   }, [side]);
+
+  useEffect(
+    () => () => {
+      flipTimers.current.forEach((id) => window.clearTimeout(id));
+    },
+    [],
+  );
 
   const color = piece.colors[colorIndex] ?? piece.colors[0];
   const area = PRINT_AREA[piece.type];
@@ -828,6 +837,22 @@ export function StudioEditor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const changeSide = (next: Side) => {
+    if (next === side || flip !== "idle") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      void apiRef.current?.switchSide(next);
+      return;
+    }
+    setFlip("out");
+    const out = window.setTimeout(async () => {
+      await apiRef.current?.switchSide(next);
+      setFlip("in");
+      const settle = window.setTimeout(() => setFlip("idle"), 280);
+      flipTimers.current.push(settle);
+    }, 180);
+    flipTimers.current.push(out);
+  };
+
   const handleFile = async (file: File | undefined) => {
     if (!file) return;
     if (file.size > 15 * 1024 * 1024) {
@@ -920,8 +945,9 @@ export function StudioEditor({
                   key={value}
                   type="button"
                   aria-pressed={side === value}
-                  onClick={() => void apiRef.current?.switchSide(value)}
-                  className={`rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors ${
+                  disabled={flip !== "idle"}
+                  onClick={() => changeSide(value)}
+                  className={`rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors disabled:cursor-wait ${
                     side === value ? "bg-ink text-paper" : "text-ink-soft hover:text-ink"
                   }`}
                 >
@@ -955,12 +981,16 @@ export function StudioEditor({
 
         <div className="bg-stage px-3 py-8 sm:px-6 md:py-10">
           <div
-            className="relative mx-auto w-full max-w-[440px] xl:max-w-[520px]"
+            className={`relative mx-auto w-full max-w-[440px] xl:max-w-[520px] ${
+              flip === "out" ? "mw-flip-out" : flip === "in" ? "mw-flip-in" : ""
+            } ${flip !== "idle" ? "pointer-events-none" : ""}`}
             style={{ aspectRatio: "400 / 470" }}
+            aria-busy={flip !== "idle"}
           >
             <Garment
               type={piece.type}
               color={color.hex}
+              side={side}
               mark={false}
               className="absolute inset-0 h-full w-full"
             />

@@ -20,13 +20,16 @@ type GarmentProps = {
   color: string;
   className?: string;
   mark?: boolean;
+  /** Flat-lay face. The back swaps the neckline and hides front-only details. */
+  side?: "front" | "back";
 };
 
 /**
  * Flat-lay garment silhouettes drawn in SVG so the catalogue never depends on
  * external mockup images. Later these get replaced by real product photography.
  */
-export function Garment({ type, color, className, mark = true }: GarmentProps) {
+export function Garment({ type, color, className, mark = true, side = "front" }: GarmentProps) {
+  const back = side === "back";
   const detail = isLight(color) ? "#0b0b0a" : "#ffffff";
   const shade = isLight(color) ? "#0b0b0a" : "#ffffff";
 
@@ -43,18 +46,33 @@ export function Garment({ type, color, className, mark = true }: GarmentProps) {
       {type === "tee" && (
         <g>
           <path
-            d="M152 62 118 72 58 122l34 78 36-18v258h144V182l36 18 34-78-60-50-30-10c-10 42-86 42-96 0Z"
+            d={
+              back
+                ? "M152 62 118 72 58 122l34 78 36-18v258h144V182l36 18 34-78-60-50-30-10c-6 18-90 18-96 0Z"
+                : "M152 62 118 72 58 122l34 78 36-18v258h144V182l36 18 34-78-60-50-30-10c-10 42-86 42-96 0Z"
+            }
             fill={color}
             stroke={detail}
             strokeOpacity="0.14"
             strokeWidth="2"
           />
           <path
-            d="M152 62c10 42 86 42 96 0"
+            d={back ? "M152 62c10 18 86 18 96 0" : "M152 62c10 42 86 42 96 0"}
             stroke={detail}
             strokeOpacity="0.35"
             strokeWidth="7"
           />
+          {back && (
+            <rect
+              x="185"
+              y="74"
+              width="30"
+              height="9"
+              rx="2"
+              fill={detail}
+              fillOpacity="0.18"
+            />
+          )}
           <path d="M126 418h148" stroke={detail} strokeOpacity="0.16" strokeWidth="2" />
           {mark && (
             <text
@@ -77,18 +95,33 @@ export function Garment({ type, color, className, mark = true }: GarmentProps) {
       {type === "oversized" && (
         <g>
           <path
-            d="M150 58 110 70 38 128l42 86 34-18v250h172V196l34 18 42-86-72-58-40-12c-8 44-92 44-100 0Z"
+            d={
+              back
+                ? "M150 58 110 70 38 128l42 86 34-18v250h172V196l34 18 42-86-72-58-40-12c-6 20-94 20-100 0Z"
+                : "M150 58 110 70 38 128l42 86 34-18v250h172V196l34 18 42-86-72-58-40-12c-8 44-92 44-100 0Z"
+            }
             fill={color}
             stroke={detail}
             strokeOpacity="0.14"
             strokeWidth="2"
           />
           <path
-            d="M150 58c8 44 92 44 100 0"
+            d={back ? "M150 58c8 20 92 20 100 0" : "M150 58c8 44 92 44 100 0"}
             stroke={detail}
             strokeOpacity="0.35"
             strokeWidth="7"
           />
+          {back && (
+            <rect
+              x="184"
+              y="70"
+              width="32"
+              height="9"
+              rx="2"
+              fill={detail}
+              fillOpacity="0.18"
+            />
+          )}
           <path d="M112 420h176" stroke={detail} strokeOpacity="0.16" strokeWidth="2" />
           {mark && (
             <text
@@ -117,31 +150,57 @@ export function Garment({ type, color, className, mark = true }: GarmentProps) {
             strokeOpacity="0.14"
             strokeWidth="2"
           />
-          <path
-            d="M152 118c2 30 22 46 48 46s46-16 48-46"
-            stroke={detail}
-            strokeOpacity="0.32"
-            strokeWidth="6"
-          />
-          <path
-            d="M168 96c10 22 54 22 64 0"
-            stroke={detail}
-            strokeOpacity="0.18"
-            strokeWidth="2"
-          />
-          <path
-            d="M154 344h92v44h-92z"
-            stroke={detail}
-            strokeOpacity="0.2"
-            strokeWidth="2"
-          />
-          <path
-            d="M186 168v46M214 168v46"
-            stroke={detail}
-            strokeOpacity="0.5"
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
+          {back ? (
+            <path
+              d="M158 128c10 30 74 30 84 0"
+              stroke={detail}
+              strokeOpacity="0.28"
+              strokeWidth="4"
+            />
+          ) : (
+            <path
+              d="M152 118c2 30 22 46 48 46s46-16 48-46"
+              stroke={detail}
+              strokeOpacity="0.32"
+              strokeWidth="6"
+            />
+          )}
+          {!back && (
+            <path
+              d="M168 96c10 22 54 22 64 0"
+              stroke={detail}
+              strokeOpacity="0.18"
+              strokeWidth="2"
+            />
+          )}
+          {back && (
+            <rect
+              x="184"
+              y="140"
+              width="32"
+              height="9"
+              rx="2"
+              fill={detail}
+              fillOpacity="0.18"
+            />
+          )}
+          {!back && (
+            <path
+              d="M154 344h92v44h-92z"
+              stroke={detail}
+              strokeOpacity="0.2"
+              strokeWidth="2"
+            />
+          )}
+          {!back && (
+            <path
+              d="M186 168v46M214 168v46"
+              stroke={detail}
+              strokeOpacity="0.5"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+          )}
           <path d="M132 404h136" stroke={detail} strokeOpacity="0.18" strokeWidth="4" />
           {mark && (
             <text
@@ -164,18 +223,33 @@ export function Garment({ type, color, className, mark = true }: GarmentProps) {
       {type === "sweatshirt" && (
         <g>
           <path
-            d="M150 64 116 74 56 126l28 74 36-18 2 240h156l2-240 36 18 28-74-60-52-34-10c-10 40-88 40-98 0Z"
+            d={
+              back
+                ? "M150 64 116 74 56 126l28 74 36-18 2 240h156l2-240 36 18 28-74-60-52-34-10c-8 20-90 20-98 0Z"
+                : "M150 64 116 74 56 126l28 74 36-18 2 240h156l2-240 36 18 28-74-60-52-34-10c-10 40-88 40-98 0Z"
+            }
             fill={color}
             stroke={detail}
             strokeOpacity="0.14"
             strokeWidth="2"
           />
           <path
-            d="M150 64c10 40 88 40 98 0"
+            d={back ? "M150 64c10 20 88 20 98 0" : "M150 64c10 40 88 40 98 0"}
             stroke={detail}
             strokeOpacity="0.34"
             strokeWidth="8"
           />
+          {back && (
+            <rect
+              x="184"
+              y="76"
+              width="32"
+              height="9"
+              rx="2"
+              fill={detail}
+              fillOpacity="0.18"
+            />
+          )}
           <path
             d="M128 376h144"
             stroke={detail}
@@ -223,7 +297,30 @@ export function Garment({ type, color, className, mark = true }: GarmentProps) {
             strokeOpacity="0.18"
             strokeWidth="2"
           />
-          <circle cx="200" cy="152" r="7" fill={detail} fillOpacity="0.35" />
+          {back ? (
+            <g>
+              <path
+                d="M176 318h48"
+                stroke={detail}
+                strokeOpacity="0.38"
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+              <rect
+                x="193"
+                y="311"
+                width="14"
+                height="14"
+                rx="3"
+                fill="none"
+                stroke={detail}
+                strokeOpacity="0.35"
+                strokeWidth="2"
+              />
+            </g>
+          ) : (
+            <circle cx="200" cy="152" r="7" fill={detail} fillOpacity="0.35" />
+          )}
           {mark && (
             <text
               x="200"
